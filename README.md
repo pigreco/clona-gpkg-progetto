@@ -1,0 +1,1 @@
+# clona-gpkg-progetto
