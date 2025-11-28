@@ -8,6 +8,7 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 
 ## ✨ Caratteristiche
 
+- Rilevamento automatico del GeoPackage utilizzato nel progetto corrente
 - Copia un GeoPackage esistente in una nuova posizione
 - Modifica chirurgicamente il file di progetto QGIS (`.qgs` o `.qgz`)
 - Sostituisce tutti i riferimenti al vecchio GeoPackage con il nuovo
@@ -20,7 +21,7 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 2. **Salva il progetto** (importante: lo script richiede un progetto salvato su disco)
 3. Esegui lo script tramite la Processing Toolbox
 4. Fornisci i seguenti parametri:
-   - **GeoPackage ORIGINALE**: Il file `.gpkg` attuale
+   - **GeoPackage ORIGINALE**: Il file `.gpkg` attuale (viene precompilato automaticamente rilevando il GeoPackage dal progetto corrente)
    - **Salva NUOVO GeoPackage come**: Il percorso e nome del nuovo file `.gpkg`
    - **Salva NUOVO Progetto come**: Il percorso e nome del nuovo progetto (`.qgs` o `.qgz`)
 

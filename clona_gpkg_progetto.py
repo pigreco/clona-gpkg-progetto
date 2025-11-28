@@ -3,6 +3,7 @@ from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingParameterFile,
     QgsProcessingParameterFileDestination,
+    QgsProcessingParameterString,
     QgsProject,
     QgsProcessingException
 )
@@ -38,13 +39,38 @@ class ClonaGpkgProgettoChirurgico(QgsProcessingAlgorithm):
             "Nota: Assicurati di salvare il Nuovo Progetto nella stessa cartella (o una sottocartella simile) rispetto al Nuovo GeoPackage, altrimenti il percorso relativo ./ potrebbe non trovare il file."
         )
 
+    def _find_current_gpkg(self):
+        """Trova il primo GeoPackage utilizzato nel progetto corrente"""
+        project = QgsProject.instance()
+
+        # Cerca tra tutti i layer del progetto
+        for layer in project.mapLayers().values():
+            source = layer.source()
+            # Controlla se la sorgente contiene un file .gpkg
+            if '.gpkg' in source.lower():
+                # Estrai il percorso del file (rimuovendo eventuali layer names dopo |)
+                gpkg_path = source.split('|')[0]
+                # Se il percorso è relativo, convertilo in assoluto
+                if not os.path.isabs(gpkg_path):
+                    project_dir = os.path.dirname(project.fileName())
+                    gpkg_path = os.path.normpath(os.path.join(project_dir, gpkg_path))
+                # Verifica che il file esista
+                if os.path.exists(gpkg_path):
+                    return gpkg_path
+
+        return ''  # Ritorna stringa vuota se non trova nessun geopackage
+
     def initAlgorithm(self, config=None):
+        # Trova il primo geopackage nel progetto corrente
+        default_gpkg = self._find_current_gpkg()
+
         self.addParameter(
             QgsProcessingParameterFile(
                 self.INPUT_GPKG,
                 '1. GeoPackage ORIGINALE (Quello attuale)',
                 behavior=QgsProcessingParameterFile.File,
-                fileFilter='GeoPackage (*.gpkg)'
+                fileFilter='GeoPackage (*.gpkg)',
+                defaultValue=default_gpkg
             )
         )
         self.addParameter(
