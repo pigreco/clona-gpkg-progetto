@@ -2,6 +2,8 @@
 
 Script QGIS Processing per duplicare un GeoPackage e aggiornare automaticamente i riferimenti nel progetto QGIS utilizzando la modifica diretta del codice XML.
 
+> ⚠️ **DISCLAIMER**: Questo algoritmo è ancora in fase di testing. Si consiglia di effettuare backup dei propri progetti e GeoPackage prima dell'utilizzo. Verificare sempre il risultato dopo l'esecuzione.
+
 ## 📋 Descrizione
 
 Questo script ignora le impostazioni di QGIS e modifica direttamente il codice XML del file di progetto. Sostituisce il nome del file GeoPackage vecchio con quello nuovo ovunque lo trovi (anche nei percorsi relativi `./`).
@@ -27,10 +29,12 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 
 ## ⚠️ Note Importanti
 
+- **Il progetto deve essere salvato su disco (non nel GeoPackage)** - Lo script NON gestisce progetti memorizzati all'interno del GeoPackage
 - Assicurati di salvare il Nuovo Progetto nella stessa cartella (o una sottocartella simile) rispetto al Nuovo GeoPackage, altrimenti il percorso relativo `./` potrebbe non trovare il file
 - Il progetto corrente deve essere salvato prima di eseguire lo script
 - Lo script conta e riporta quante occorrenze del vecchio nome file sono state trovate e sostituite
 - Dopo l'esecuzione, apri manualmente il nuovo progetto per verificare che tutto funzioni correttamente
+- **Effettua sempre backup** dei tuoi progetti e GeoPackage prima di utilizzare lo script
 
 ## 📦 Installazione
 
