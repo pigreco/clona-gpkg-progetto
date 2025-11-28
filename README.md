@@ -58,9 +58,15 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 
 Vedi il file [LICENSE](LICENSE) per i dettagli.
 
+## 📜 Changelog
+
+Tutte le modifiche significative sono documentate nel [CHANGELOG.md](CHANGELOG.md).
+
 ## 🤝 Contributi
 
 Contributi, problemi e richieste di funzionalità sono benvenuti!
+
+Per contribuire, consulta la [guida al contributo](CONTRIBUTING.md).
 
 ## 👤 Autore
 

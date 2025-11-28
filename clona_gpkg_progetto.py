@@ -100,12 +100,24 @@ class ClonaGpkgProgettoChirurgico(QgsProcessingAlgorithm):
         old_gpkg_full = self.parameterAsString(parameters, self.INPUT_GPKG, context)
         new_gpkg_full = self.parameterAsString(parameters, self.OUTPUT_GPKG, context)
         new_project_path = self.parameterAsString(parameters, self.OUTPUT_PROJECT, context)
-        
+
         # Percorso del progetto ATTUALMENTE APERTO (che useremo come base)
         current_project_path = QgsProject.instance().fileName()
-        
+
         if not current_project_path:
             raise QgsProcessingException("ERRORE: Salva il progetto corrente su disco prima di lanciare lo script!")
+
+        # VALIDAZIONE: Verifica che il nuovo progetto sia nella stessa cartella del nuovo GeoPackage
+        new_gpkg_dir = os.path.dirname(os.path.abspath(new_gpkg_full))
+        new_project_dir = os.path.dirname(os.path.abspath(new_project_path))
+
+        if new_gpkg_dir != new_project_dir:
+            raise QgsProcessingException(
+                f"ERRORE: Il nuovo progetto deve essere salvato nella stessa cartella del nuovo GeoPackage!\n"
+                f"Cartella GeoPackage: {new_gpkg_dir}\n"
+                f"Cartella Progetto: {new_project_dir}\n"
+                f"Per mantenere i percorsi relativi (./) funzionanti, salva entrambi i file nella stessa directory."
+            )
 
         # Estraiamo SOLO i nomi dei file (es. 'confini.gpkg' e 'confini_v2.gpkg')
         # Questo è il trucco: sostituiremo solo questi, fregandocene del percorso C:\... o ./...

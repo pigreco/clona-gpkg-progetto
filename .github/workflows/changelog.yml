@@ -1,0 +1,36 @@
+name: Aggiorna Changelog
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  update-changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install changelog tool
+        run: npm install -g auto-changelog
+
+      - name: Update CHANGELOG
+        run: |
+          auto-changelog --config .changelogrc.json --unreleased --commit-limit false
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "docs: aggiorna CHANGELOG.md automaticamente"
+          file_pattern: CHANGELOG.md

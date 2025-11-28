@@ -1,0 +1,54 @@
+# Configurazione per git-cliff (alternativa più potente)
+# Installazione: cargo install git-cliff
+# Utilizzo: git cliff --config .cliff.toml --output CHANGELOG.md
+
+[changelog]
+header = """
+# Changelog
+
+Tutte le modifiche significative a questo progetto saranno documentate in questo file.
+
+Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
+e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
+
+"""
+body = """
+{% if version %}\
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+    ## [Non rilasciato]
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | upper_first }}
+    {% for commit in commits %}
+        - {{ commit.message | upper_first | trim }}\
+    {% endfor %}
+{% endfor %}\n
+"""
+trim = true
+
+[git]
+conventional_commits = true
+filter_unconventional = true
+split_commits = false
+commit_parsers = [
+    { message = "^feat", group = "Aggiunto" },
+    { message = "^add", group = "Aggiunto" },
+    { message = "^fix", group = "Corretto" },
+    { message = "^bug", group = "Corretto" },
+    { message = "^doc", group = "Documentazione" },
+    { message = "^perf", group = "Prestazioni" },
+    { message = "^refactor", group = "Modificato" },
+    { message = "^style", group = "Modificato" },
+    { message = "^test", skip = true },
+    { message = "^chore", skip = true },
+    { message = "^ci", skip = true },
+    { message = "^build", skip = true },
+]
+protect_breaking_commits = false
+filter_commits = true
+tag_pattern = "v[0-9]*"
+skip_tags = ""
+ignore_tags = ""
+topo_order = false
+sort_commits = "oldest"

@@ -1,0 +1,34 @@
+{
+  "changelog": {
+    "file": "CHANGELOG.md",
+    "format": "keepachangelog",
+    "sections": [
+      {
+        "title": "Aggiunto",
+        "labels": ["enhancement", "feature", "added"]
+      },
+      {
+        "title": "Modificato",
+        "labels": ["changed", "updated"]
+      },
+      {
+        "title": "Deprecato",
+        "labels": ["deprecated"]
+      },
+      {
+        "title": "Rimosso",
+        "labels": ["removed"]
+      },
+      {
+        "title": "Corretto",
+        "labels": ["bug", "fix", "fixed"]
+      },
+      {
+        "title": "Sicurezza",
+        "labels": ["security"]
+      }
+    ]
+  },
+  "versioning": "semver",
+  "repository": "https://github.com/pigreco/clona-gpkg-progetto"
+}
