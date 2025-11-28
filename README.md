@@ -11,6 +11,7 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 ## ✨ Caratteristiche
 
 - Rilevamento automatico del GeoPackage utilizzato nel progetto corrente
+- Verifica che il progetto corrente non sia salvato dentro un GeoPackage
 - Copia un GeoPackage esistente in una nuova posizione
 - Modifica chirurgicamente il file di progetto QGIS (`.qgs` o `.qgz`)
 - Sostituisce tutti i riferimenti al vecchio GeoPackage con il nuovo
@@ -20,10 +21,10 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 ## 🚀 Utilizzo
 
 1. Apri il tuo progetto QGIS che usa il GeoPackage da duplicare
-2. **Salva il progetto** (importante: lo script richiede un progetto salvato su disco)
+2. **Salva il progetto su disco** (importante: NON dentro un GeoPackage, ma come file .qgs/.qgz)
 3. Esegui lo script tramite la Processing Toolbox
 4. Fornisci i seguenti parametri:
-   - **GeoPackage ORIGINALE**: Il file `.gpkg` attuale (viene precompilato automaticamente rilevando il GeoPackage dal progetto corrente)
+   - **GeoPackage ORIGINALE**: Il file `.gpkg` attuale (viene precompilato automaticamente)
    - **Salva NUOVO GeoPackage come**: Il percorso e nome del nuovo file `.gpkg`
    - **Salva NUOVO Progetto come**: Il percorso e nome del nuovo progetto (`.qgs` o `.qgz`)
 
@@ -33,9 +34,8 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
 
 ## ⚠️ Note Importanti
 
-- **Il progetto deve essere salvato su disco (non nel GeoPackage)** - Lo script NON gestisce progetti memorizzati all'interno del GeoPackage
-- Assicurati di salvare il Nuovo Progetto nella stessa cartella (o una sottocartella simile) rispetto al Nuovo GeoPackage, altrimenti il percorso relativo `./` potrebbe non trovare il file
-- Il progetto corrente deve essere salvato prima di eseguire lo script
+- **Il progetto deve essere salvato su disco (non nel GeoPackage)** - Se il progetto corrente è dentro un GeoPackage, lo script si blocca e ti chiede di salvarlo su disco prima
+- **Il nuovo progetto deve essere nella stessa cartella del nuovo GeoPackage** - Lo script verifica questo requisito e blocca l'esecuzione se non rispettato
 - Lo script conta e riporta quante occorrenze del vecchio nome file sono state trovate e sostituite
 - Dopo l'esecuzione, apri manualmente il nuovo progetto per verificare che tutto funzioni correttamente
 - **Effettua sempre backup** dei tuoi progetti e GeoPackage prima di utilizzare lo script

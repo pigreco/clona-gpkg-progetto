@@ -8,14 +8,22 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [Non rilasciato]
 
 ### Aggiunto
+- **Controllo progetti dentro GeoPackage**: Lo script ora rileva se il progetto corrente è salvato dentro un GeoPackage e blocca l'esecuzione con istruzioni chiare per l'utente
 - Validazione che impedisce l'esecuzione se il nuovo progetto non è nella stessa cartella del nuovo GeoPackage
 - Disclaimer nel README che avverte che l'algoritmo è in fase di testing
 - Screenshot dell'interfaccia nel README
-- Nota che lo script NON gestisce progetti memorizzati all'interno del GeoPackage
+- File CHANGELOG.md con storico completo delle modifiche
+- File CONTRIBUTING.md con guida per i contributori
+- Configurazione per aggiornamento automatico del changelog (.changelogrc.json, .cliff.toml)
+- GitHub Actions workflow per aggiornamento automatico del changelog
 
 ### Modificato
 - Migliorato `shortHelpString()` con informazioni più dettagliate e strutturate
 - Aggiornato README con nuove funzionalità e note importanti
+- Messaggio di errore più chiaro e dettagliato quando il progetto non è salvato
+
+### Rimosso
+- Rimossa funzionalità sperimentale di salvataggio progetto nel GeoPackage (non supportata adeguatamente dalle API di QGIS)
 
 ## [0.1.0] - 2025-01-28
 

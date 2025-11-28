@@ -3,7 +3,6 @@ from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingParameterFile,
     QgsProcessingParameterFileDestination,
-    QgsProcessingParameterString,
     QgsProject,
     QgsProcessingException
 )
@@ -41,8 +40,8 @@ class ClonaGpkgProgettoChirurgico(QgsProcessingAlgorithm):
             "• Sostituisce tutti i riferimenti al vecchio GeoPackage con il nuovo\n\n"
             "Note importanti:\n"
             "• Il progetto deve essere salvato su disco (non nel GeoPackage)\n"
-            "• Lo script NON gestisce progetti memorizzati all'interno del GeoPackage\n"
-            "• Salva il nuovo progetto nella stessa cartella (o sottocartella) del nuovo GeoPackage\n"
+            "• Lo script rileva e blocca l'esecuzione se il progetto è dentro un GeoPackage\n"
+            "• Il nuovo progetto deve essere nella stessa cartella del nuovo GeoPackage\n"
             "• I percorsi relativi (./) vengono mantenuti intatti"
         )
 
@@ -106,6 +105,18 @@ class ClonaGpkgProgettoChirurgico(QgsProcessingAlgorithm):
 
         if not current_project_path:
             raise QgsProcessingException("ERRORE: Salva il progetto corrente su disco prima di lanciare lo script!")
+
+        # VALIDAZIONE: Verifica che il progetto corrente NON sia salvato dentro un GeoPackage
+        if '|' in current_project_path:
+            raise QgsProcessingException(
+                "ERRORE: Il progetto corrente è salvato DENTRO un GeoPackage!\n\n"
+                "Questo script funziona solo con progetti salvati su disco (.qgs/.qgz).\n\n"
+                "Per favore:\n"
+                "1. Vai su: Progetto > Salva con nome\n"
+                "2. Salva il progetto come file .qgs o .qgz su disco\n"
+                "3. Riapri il progetto appena salvato\n"
+                "4. Esegui nuovamente questo script"
+            )
 
         # VALIDAZIONE: Verifica che il nuovo progetto sia nella stessa cartella del nuovo GeoPackage
         new_gpkg_dir = os.path.dirname(os.path.abspath(new_gpkg_full))
@@ -175,7 +186,7 @@ class ClonaGpkgProgettoChirurgico(QgsProcessingAlgorithm):
 
         # --- 5. SCRITTURA NUOVO PROGETTO ---
         feedback.pushInfo(f"Salvataggio nuovo progetto: {new_project_path}")
-        
+
         if new_project_path.endswith('.qgz'):
             try:
                 with zipfile.ZipFile(new_project_path, 'w', compression=zipfile.ZIP_DEFLATED) as zout:
