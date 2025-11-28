@@ -33,10 +33,17 @@ class ClonaGpkgProgettoChirurgico(QgsProcessingAlgorithm):
 
     def shortHelpString(self):
         return (
-            "Questo script ignora le impostazioni di QGIS e modifica direttamente "
-            "il codice XML del file di progetto.\n"
-            "Sostituisce il nome del file vecchio con quello nuovo ovunque lo trovi (anche nei percorsi relativi ./).\n"
-            "Nota: Assicurati di salvare il Nuovo Progetto nella stessa cartella (o una sottocartella simile) rispetto al Nuovo GeoPackage, altrimenti il percorso relativo ./ potrebbe non trovare il file."
+            "Clona un GeoPackage e aggiorna automaticamente tutti i riferimenti nel progetto QGIS.\n\n"
+            "Come funziona:\n"
+            "• Rileva automaticamente il GeoPackage utilizzato nel progetto corrente\n"
+            "• Copia il GeoPackage nella nuova posizione specificata\n"
+            "• Modifica chirurgicamente il codice XML del file di progetto (.qgs/.qgz)\n"
+            "• Sostituisce tutti i riferimenti al vecchio GeoPackage con il nuovo\n\n"
+            "Note importanti:\n"
+            "• Il progetto deve essere salvato su disco (non nel GeoPackage)\n"
+            "• Lo script NON gestisce progetti memorizzati all'interno del GeoPackage\n"
+            "• Salva il nuovo progetto nella stessa cartella (o sottocartella) del nuovo GeoPackage\n"
+            "• I percorsi relativi (./) vengono mantenuti intatti"
         )
 
     def _find_current_gpkg(self):
