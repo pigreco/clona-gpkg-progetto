@@ -27,6 +27,10 @@ Questo script ignora le impostazioni di QGIS e modifica direttamente il codice X
    - **Salva NUOVO GeoPackage come**: Il percorso e nome del nuovo file `.gpkg`
    - **Salva NUOVO Progetto come**: Il percorso e nome del nuovo progetto (`.qgs` o `.qgz`)
 
+### Screenshot dell'interfaccia
+
+![Screenshot interfaccia](screen.png)
+
 ## ⚠️ Note Importanti
 
 - **Il progetto deve essere salvato su disco (non nel GeoPackage)** - Lo script NON gestisce progetti memorizzati all'interno del GeoPackage
